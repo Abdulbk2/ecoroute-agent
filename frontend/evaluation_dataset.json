@@ -1,0 +1,23 @@
+[
+  {
+    "scenario_id": 1,
+    "waste_input": "500 liters of used industrial hydraulic oil",
+    "expected_compliance_rule": "Must be handled by a certified hazardous waste transporter. Cannot be mixed with other solvents.",
+    "expected_action": "Route to nearest oil re-refining facility.",
+    "key_metric": "High risk of EPA/Local Environmental fines if dumped."
+  },
+  {
+    "scenario_id": 2,
+    "waste_input": "2 tons of scrap copper wire (stripped)",
+    "expected_compliance_rule": "Non-hazardous. High resale value.",
+    "expected_action": "Query scrap metal market prices. Route to highest-paying local scrap yard.",
+    "key_metric": "Positive ROI (Revenue generation) and massive carbon offset compared to mining new copper."
+  },
+  {
+    "scenario_id": 3,
+    "waste_input": "150 kg of mixed corporate E-Waste (old servers, laptops, batteries)",
+    "expected_compliance_rule": "Requires strict data destruction certification (e.g., R2 or e-Stewards) and heavy metal containment.",
+    "expected_action": "Route to certified e-waste recycler with data-wiping capabilities.",
+    "key_metric": "Data security compliance + lead/lithium environmental protection."
+  }
+]
