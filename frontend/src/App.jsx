@@ -4,9 +4,12 @@ import ResultsDashboard from './components/ResultsDashboard';
 
 function App() {
   const [showResults, setShowResults] = useState(false);
+  const [apiResult, setApiResult] = useState(null);
 
-  // This function simulates the AI processing time when you click submit
-  const handleSimulatedSubmit = () => {
+  // This function catches the real JSON data from your Python backend!
+  const handleBackendSuccess = (data) => {
+    console.log("Data received in App.jsx:", data);
+    setApiResult(data);
     setShowResults(true);
   };
 
@@ -18,15 +21,15 @@ function App() {
       </header>
       
       <main style={{ display: 'flex', flexWrap: 'wrap', gap: '2rem', justifyContent: 'center', alignItems: 'flex-start' }}>
-        {/* We pass the handleSimulatedSubmit down to the form so we can trigger the dashboard */}
-        <div style={{ flex: '1 1 400px', maxWidth: '500px' }} onClick={handleSimulatedSubmit}>
-           <WasteSubmissionForm />
+        <div style={{ flex: '1 1 400px', maxWidth: '500px' }}>
+           {/* Pass the success function down to the form */}
+           <WasteSubmissionForm onProcessComplete={handleBackendSuccess} />
         </div>
         
-        {/* The dashboard only shows up after the user clicks Submit */}
+        {/* Only show the dashboard if we have results, and pass the Python data into it */}
         {showResults && (
           <div style={{ flex: '1 1 400px', maxWidth: '600px', animation: 'fadeIn 0.5s ease-in' }}>
-            <ResultsDashboard />
+            <ResultsDashboard result={apiResult} />
           </div>
         )}
       </main>

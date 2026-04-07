@@ -21,7 +21,8 @@ const WasteSubmissionForm = ({ onProcessComplete }) => {
     try {
       // 1. Point this to your LOCAL FastAPI server
       // Note: When Sravani deploys, you will change this to her Cloud Run URL
-      const API_URL = "http://localhost:8000/api/analyze"; 
+     // Change this line:
+      const API_URL = "/api/analyze";
       
       // 2. Fire the data to Python!
       const response = await fetch(API_URL, {
