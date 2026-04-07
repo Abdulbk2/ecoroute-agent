@@ -1,20 +1,47 @@
 import React, { useState } from 'react';
 
-const WasteSubmissionForm = () => {
+// We pass a new prop 'onProcessComplete' to send data up to the dashboard
+const WasteSubmissionForm = ({ onProcessComplete }) => {
   const [formData, setFormData] = useState({
     wasteType: '',
     quantity: '',
     unit: 'kg',
   });
+  
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Sending to AI Agent:", formData);
-    alert("Data sent to EcoRoute Agent for analysis!");
+    setIsLoading(true);
+
+    try {
+      // 1. Point this to your LOCAL FastAPI server
+      // Note: When Sravani deploys, you will change this to her Cloud Run URL
+      const API_URL = "http://localhost:8000/api/analyze"; 
+      
+      // 2. Fire the data to Python!
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      
+      // 3. Get the JSON report back from LangGraph
+      const data = await response.json();
+      
+      // 4. Stop the loading spinner and pass data to the Dashboard
+      setIsLoading(false);
+      if(onProcessComplete) onProcessComplete(data);
+
+    } catch (error) {
+      console.error("Agent failed to process:", error);
+      setIsLoading(false);
+      alert("Error connecting to backend. Is the FastAPI server running?");
+    }
   };
 
   return (
@@ -73,9 +100,19 @@ const WasteSubmissionForm = () => {
 
         <button 
           type="submit" 
-          style={{ marginTop: '10px', padding: '12px', backgroundColor: '#4ADE80', color: '#000', fontWeight: 'bold', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
+          disabled={isLoading}
+          style={{ 
+            marginTop: '10px', 
+            padding: '12px', 
+            backgroundColor: isLoading ? '#6b7280' : '#4ADE80', 
+            color: '#000', 
+            fontWeight: 'bold', 
+            border: 'none', 
+            borderRadius: '5px', 
+            cursor: isLoading ? 'not-allowed' : 'pointer' 
+          }}
         >
-          Analyze Compliance & Routing
+          {isLoading ? 'Agent is Analyzing...' : 'Analyze Compliance & Routing'}
         </button>
       </form>
     </div>
