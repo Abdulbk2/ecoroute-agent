@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 
-// We pass a new prop 'onProcessComplete' to send data up to the dashboard
 const WasteSubmissionForm = ({ onProcessComplete }) => {
   const [formData, setFormData] = useState({
     wasteType: '',
     quantity: '',
     unit: 'kg',
   });
-  
   const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -19,29 +17,22 @@ const WasteSubmissionForm = ({ onProcessComplete }) => {
     setIsLoading(true);
 
     try {
-      // 1. Point this to your LOCAL FastAPI server
-      // Note: When Sravani deploys, you will change this to her Cloud Run URL
-     // Change this line:
-      const API_URL = "/api/analyze";
-      
-      // 2. Fire the data to Python!
-      const response = await fetch(API_URL, {
+      const response = await fetch('/api/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
-      
-      // 3. Get the JSON report back from LangGraph
-      const data = await response.json();
-      
-      // 4. Stop the loading spinner and pass data to the Dashboard
-      setIsLoading(false);
-      if(onProcessComplete) onProcessComplete(data);
 
-    } catch (error) {
-      console.error("Agent failed to process:", error);
+      const data = await response.json();
       setIsLoading(false);
-      alert("Error connecting to backend. Is the FastAPI server running?");
+
+      if (onProcessComplete) {
+        onProcessComplete(data);
+      }
+    } catch (error) {
+      console.error('Agent failed to process:', error);
+      setIsLoading(false);
+      alert('Error connecting to backend. Is the API server running?');
     }
   };
 
@@ -102,15 +93,15 @@ const WasteSubmissionForm = ({ onProcessComplete }) => {
         <button 
           type="submit" 
           disabled={isLoading}
-          style={{ 
-            marginTop: '10px', 
-            padding: '12px', 
-            backgroundColor: isLoading ? '#6b7280' : '#4ADE80', 
-            color: '#000', 
-            fontWeight: 'bold', 
-            border: 'none', 
-            borderRadius: '5px', 
-            cursor: isLoading ? 'not-allowed' : 'pointer' 
+          style={{
+            marginTop: '10px',
+            padding: '12px',
+            backgroundColor: isLoading ? '#6b7280' : '#4ADE80',
+            color: '#000',
+            fontWeight: 'bold',
+            border: 'none',
+            borderRadius: '5px',
+            cursor: isLoading ? 'not-allowed' : 'pointer'
           }}
         >
           {isLoading ? 'Agent is Analyzing...' : 'Analyze Compliance & Routing'}

@@ -1,11 +1,3 @@
-from pathlib import Path
-import sys
-
-BACKEND_ROOT = Path(__file__).resolve().parents[1]
-if str(BACKEND_ROOT) not in sys.path:
-    sys.path.insert(0, str(BACKEND_ROOT))
-
-
 from app.db.mock_rules import COMPLIANCE_RULES, LOGISTICS_RULES
 from app.graph.state import GraphState
 from app.graph.workflow import build_workflow
@@ -82,3 +74,15 @@ def test_workflow_runs_end_to_end_for_e_waste():
     assert result["category"] == "e_waste"
     assert result["final_report"]["rule"].startswith("Requires strict data destruction")
     assert result["final_report"]["action"] == "Route to certified e-waste recycler with data wiping capabilities."
+
+
+def test_analyze_endpoint_returns_frontend_report(client):
+    response = client.post(
+        "/api/analyze",
+        json={"wasteType": "scrap_copper", "quantity": "2", "unit": "tons"},
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["status"] == "Action Required: High Value"
+    assert payload["action"] == "Route to local certified scrap yard."
