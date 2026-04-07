@@ -6,11 +6,10 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      // This tells Vite: "Any request to /api should be sent to Python internally"
       '/api': {
         target: 'http://127.0.0.1:8000',
         changeOrigin: true,
-      }
-    }
-  }
+      },
+    },
+  },
 })
