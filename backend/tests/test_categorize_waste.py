@@ -19,7 +19,7 @@ def test_categorize_waste_detects_scrap_copper():
     assert result == {"category": "scrap_copper"}
 
 
-def test_categorize_waste_detects_e_waste_before_scrap_copper():
+def test_categorize_waste_detects_e_waste_from_server_input():
     result = categorize_waste({"waste_input": "server wire harness"})
     assert result == {"category": "e_waste"}
 

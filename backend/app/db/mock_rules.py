@@ -10,25 +10,25 @@ LOGISTICS_RULES = {
     "industrial_oil": {
         "status": "Action Required: Hazardous Waste",
         "action": "Route to nearest oil re-refining facility.",
-        "carbonSaved": "850 kg CO2e",
-        "financialImpact": "-$250.00 (Handling Cost)",
+        "carbon_saved": "850 kg CO2e",
+        "financial_impact": "-$250.00 (Handling Cost)",
     },
     "scrap_copper": {
         "status": "Action Required: High Value",
         "action": "Route to local certified scrap yard.",
-        "carbonSaved": "1,200 kg CO2e",
-        "financialImpact": "+$850.00 (Est. Resale)",
+        "carbon_saved": "1,200 kg CO2e",
+        "financial_impact": "+$850.00 (Est. Resale)",
     },
     "e_waste": {
         "status": "Action Required: Certified Processing",
         "action": "Route to certified e-waste recycler with data wiping capabilities.",
-        "carbonSaved": "640 kg CO2e",
-        "financialImpact": "-$120.00 (Secure Processing)",
+        "carbon_saved": "640 kg CO2e",
+        "financial_impact": "-$120.00 (Secure Processing)",
     },
     "general_waste": {
         "status": "Action Required: Manual Review",
         "action": "Escalate to operations team for manual waste assessment.",
-        "carbonSaved": "Unknown",
-        "financialImpact": "Pending assessment",
+        "carbon_saved": "Unknown",
+        "financial_impact": "Pending assessment",
     },
 }
