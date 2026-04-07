@@ -4,6 +4,8 @@ from app.graph.workflow import build_workflow
 from app.nodes.calculate_logistics import calculate_logistics
 from app.nodes.check_compliance import check_compliance
 from app.nodes.generate_final_report import generate_final_report
+from fastapi.testclient import TestClient
+from main import app as active_backend_app
 
 
 def test_graph_state_supports_required_keys():
@@ -86,3 +88,16 @@ def test_analyze_endpoint_returns_frontend_report(client):
     payload = response.json()
     assert payload["status"] == "Action Required: High Value"
     assert payload["action"] == "Route to local certified scrap yard."
+
+
+def test_active_backend_entrypoint_matches_modular_workflow_output():
+    with TestClient(active_backend_app) as client:
+        response = client.post(
+            "/api/analyze",
+            json={"wasteType": "industrial_oil", "quantity": "500", "unit": "liters"},
+        )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["status"] == "Action Required: Hazardous Waste"
+    assert payload["action"] == "Route to nearest oil re-refining facility."
