@@ -26,6 +26,10 @@ EcoRoute is a full-stack application completely decoupled for edge-device integr
 EcoRoute wasn't just built as a web app; it is built as the "brain" for industrial IoT. 
 In our next phase, EcoRoute's API will connect directly to edge sensors on factory waste tanks. When a sensor detects a tank is at 90% capacity, the hardware will ping the FastAPI endpoint, and the AI agent will automatically dispatch a HAZMAT vehicle—achieving **Zero-Touch Logistics.**
 
+
+Preview : https://greenstream-ops.preview.emergentagent.com/dashboard
+
+
 ## 💻 Local Setup & Installation
 
 **1. Clone the Repository**
@@ -55,11 +59,13 @@ Our AI utilizes a strict State Machine to prevent hallucination and ensure absol
 👥 The Team
 Abdulrahman Yahaya - IoT Architecture, Full-Stack API Pipeline, React UI
 
+Sravani - DevOps & Cloud Run Deployment
+
 Muhammad - Agentic Backend Logic & Compliance Validation
 
 Payal - Logistics Routing & Carbon Math Tools
 
-Sravani - DevOps & Cloud Run Deployment
+
 
 
 ***
@@ -71,3 +77,5 @@ Sravani - DevOps & Cloud Run Deployment
 git add README.md
 git commit -m "Added professional hackathon README"
 git push origin main
+
+
